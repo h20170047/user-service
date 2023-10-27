@@ -2,6 +2,7 @@ package com.svj.controller;
 
 import com.svj.entity.User;
 import com.svj.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,7 +16,7 @@ public class UserController {
     }
 
     @PostMapping
-    public User registerNewUser(@RequestBody User user){
+    public User registerNewUser(@RequestBody @Valid User user){
         return service.addNewUser(user);
     }
 

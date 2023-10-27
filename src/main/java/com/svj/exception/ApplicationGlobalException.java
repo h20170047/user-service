@@ -6,6 +6,7 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.ObjectError;
+import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -22,8 +23,10 @@ public class ApplicationGlobalException {
     public ServiceResponse<?> handlePaymentValidator(MethodArgumentNotValidException exception){
         ServiceResponse response= new ServiceResponse();
         List<ErrorDTO> errors= new ArrayList<>();
-        for(ObjectError error: exception.getAllErrors())
-            errors.add(new ErrorDTO(error.getDefaultMessage()));
+        for(ObjectError error: exception.getAllErrors()) {
+            ConstraintViolation validationError = error.unwrap(ConstraintViolation.class);
+            errors.add(new ErrorDTO((validationError.getPropertyPath()+ " : "+validationError.getMessage())));
+        }
         response.setErrors(errors);
         return response;
     }

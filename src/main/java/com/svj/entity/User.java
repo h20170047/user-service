@@ -1,8 +1,9 @@
 package com.svj.entity;
 
+import com.svj.Validation.PaymentValidation;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
@@ -22,12 +23,14 @@ public class User {
     private String name;
     @Email
     private String email;
-    @NotBlank
-    // TODO- Validate paymentMethods from the ones provided in app.yml
+    @PaymentValidation
     private String paymentMethod;
-//    @SourceAccountValidation
-    // TODO- Check if method is other than COD from app.yml, it should have a non-blank entry
     private String srcAccount;
     @PositiveOrZero
     private double availableAmount;
+
+    @AssertTrue(message = "Invalid source account")
+    private boolean isSourceAccount() {
+        return (paymentMethod == "COD" &&  srcAccount.isEmpty()) || (paymentMethod!="COD" && !srcAccount.isEmpty());
+    }
 }
