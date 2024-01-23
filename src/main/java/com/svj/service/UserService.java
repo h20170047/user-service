@@ -1,8 +1,13 @@
 package com.svj.service;
 
+import com.svj.dto.UserRequestDTO;
+import com.svj.dto.UserResponseDTO;
 import com.svj.entity.User;
 import com.svj.repository.UserRepository;
 import org.springframework.stereotype.Service;
+
+import static com.svj.utils.AppUtils.mapDTOToEntity;
+import static com.svj.utils.AppUtils.mapEntityToDTO;
 
 @Service
 public class UserService {
@@ -12,8 +17,11 @@ public class UserService {
         this.repository= repository;
     }
 
-    public User addNewUser(User user){
-        return repository.save(user);
+    public UserResponseDTO addNewUser(UserRequestDTO userReq){
+        User user= mapDTOToEntity(userReq);
+        User savedUser = repository.save(user);
+        UserResponseDTO responseDTO= mapEntityToDTO(savedUser);
+        return responseDTO;
     }
 
     public User getUser(int userId){

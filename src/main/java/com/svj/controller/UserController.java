@@ -1,5 +1,6 @@
 package com.svj.controller;
 
+import com.svj.dto.UserRequestDTO;
 import com.svj.entity.User;
 import com.svj.service.UserService;
 import jakarta.validation.Valid;
@@ -16,7 +17,7 @@ public class UserController {
     }
 
     @PostMapping
-    public User registerNewUser(@RequestBody @Valid User user){
+    public User registerNewUser(@RequestBody @Valid UserRequestDTO user){
         return service.addNewUser(user);
     }
 

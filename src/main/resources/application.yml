@@ -6,6 +6,7 @@ spring:
     password: root
   jpa:
     hibernate:
+    show-sql: true
       ddl-auto: update
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl

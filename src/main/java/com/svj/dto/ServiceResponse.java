@@ -13,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ServiceResponse<T> {
-    private HttpResponse response;
+    private HttpResponse status;
+    private T respose;
     private List<ErrorDTO> errors;
 }

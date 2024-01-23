@@ -1,14 +1,6 @@
-package com.svj.Validation;
-
-import com.svj.UserServiceApplication;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.Set;
+package com.svj.validation;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 //@SpringBootTest(classes= UserServiceApplication.class)
 class PaymentValidatorTest {
