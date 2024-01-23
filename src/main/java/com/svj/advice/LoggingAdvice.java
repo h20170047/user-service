@@ -24,7 +24,7 @@ public class LoggingAdvice {
         this.objectMapper= objectMapper;
     }
 
-    @Around(value= "execution( * com.svj..*.*.*(..)) && !execution(* com.svj.config.UserConfig.*(..))") // all public methods, of com.svj package, every subpackage, every class, and every method irrespective of the argument type
+    @Around(value= "execution( * com.svj..*.*.*(..)) && !execution(* com.svj.config.UserConfig.*(..)) && !execution(* com.svj.validation.PaymentValidator.*(..))") // all public methods, of com.svj package, every subpackage, every class, and every method irrespective of the argument type
     public Object captureRequestAndResponse(ProceedingJoinPoint pjp) throws Throwable {
 
         // logic before logic

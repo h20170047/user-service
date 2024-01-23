@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
-//@NoArgsConstructor
+@NoArgsConstructor
 public class UserRequestDTO{
     private int id;
     @NotEmpty
