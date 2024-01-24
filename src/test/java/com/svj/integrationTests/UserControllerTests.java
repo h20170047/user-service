@@ -8,6 +8,7 @@ import com.svj.entity.User;
 import com.svj.repository.UserRepository;
 import com.svj.service.UserService;
 import com.svj.validation.PaymentValidator;
+import jakarta.validation.ConstraintValidatorContext;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.BeforeEach;
@@ -44,15 +45,15 @@ public class UserControllerTests {
     private ObjectMapper objectMapper= new ObjectMapper();
     @Autowired
     private UserService service;
-    @Autowired
+    @MockBean
     private PaymentValidator paymentValidator; // To ensure that the fields in validator is populated correctly.
     @MockBean
     private UserRepository repository;
     @Autowired
     private UserController controller;
 
-    @Value("#{'${app.paymentMethods}'}")
-    private String validPaymentMethods;
+    @Value("#{'${app.paymentMethods}'.split('\\s*,\\s*')}")
+    private Set<String> validPaymentMethods;
 
     @BeforeEach
     public void setup(){
@@ -66,6 +67,7 @@ public class UserControllerTests {
         UserRequestDTO newUser= new UserRequestDTO(0,"John", "john@doe.com", "COD", "12345", 5000);
         User savedUser= new User(newUser.getId(), newUser.getName(), newUser.getEmail(), newUser.getPaymentMethod(), newUser.getSrcAccount(), newUser.getAvailableAmount());
         savedUser.setId(1);
+        when(paymentValidator.isValid(any(String.class),any(ConstraintValidatorContext.class))).thenReturn(true);
         when(repository.save(any(User.class))).thenReturn(savedUser);
         //URL- /users
         //HTTP method- GET
