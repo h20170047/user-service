@@ -12,13 +12,15 @@ spring:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     properties:
       hibernate.dialect: org.hibernate.dialect.MySQL5Dialect
+  application:
+    name: USER-SERVICE
 #  application:
 #    name: USER-SERVICE
 #  config:
 #    import: configserver:http://localhost:9595
 
 server:
-  port: 9393
+  port: 9398
 
 #app:
 #  paymentMethods:
@@ -26,3 +28,9 @@ server:
 #    - CREDIT
 #    - DEBIT
 #    - COD
+
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/

@@ -4,6 +4,7 @@ import com.svj.dto.UserRequestDTO;
 import com.svj.entity.User;
 import com.svj.service.UserService;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -11,6 +12,9 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private UserService service;
+
+    @Value("${server.port}")
+    private int port;
 
     public UserController(UserService service){
         this.service= service;
@@ -23,6 +27,7 @@ public class UserController {
 
     @GetMapping("/{userId}")
     public User getUser(@PathVariable int userId){
+        System.out.println("Request processed from port: "+ port);
         return service.getUser(userId);
     }
 
